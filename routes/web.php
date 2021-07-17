@@ -35,4 +35,7 @@ Route::group([
     Route::post('/update/{post}', [\App\Http\Controllers\Admin\PostController::class, 'update'])->name('update');
     Route::post('/delete/{post}', [\App\Http\Controllers\Admin\PostController::class, 'delete'])->name('delete');
    });
+
+    Route::resource('users', \App\Http\Controllers\Admin\UsersController::class);
+
 });
