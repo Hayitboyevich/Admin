@@ -14,24 +14,20 @@
                         <tr>
                             <th>ID</th>
                             <th>Name</th>
-                            <th>Email</th>
-                            <th>Role</th>
-                            <th>Permission</th>
+                            <th>Slug</th>
                             <th>Actions</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($users as $user)
+                        @foreach($permissions as $permission)
                             <tr>
-                                <td>{{ $user->id }}</td>
-                                <td>{{ $user->name }}</td>
-                                <td>{{ $user->email }}</td>
-                                <td>----------</td>
-                                <td>----------</td>
+                                <td>{{ $permission->id }}</td>
+                                <td>{{ $permission->name }}</td>
+                                <td>{{ $permission->slug }}</td>
                                 <td>
-                                    <form action="{{ route('users.destroy', ['user' => $user]) }}" method="post">
+                                    <form action="{{ route('permissions.destroy', ['permission' => $permission]) }}" method="post">
                                   <span>
-                                      <a href="{{ route('users.edit', ['user'=>$user]) }}" class="text-info"><i class="fas fa-edit" aria-hidden="true"></i></a>
+                                      <a href="{{ route('permissions.edit', ['permission'=>$permission]) }}" class="text-info"><i class="fas fa-edit" aria-hidden="true"></i></a>
                                   </span>
                                         @method('delete')
                                         @csrf

@@ -37,5 +37,7 @@ Route::group([
    });
 
     Route::resource('users', \App\Http\Controllers\Admin\UsersController::class);
+    Route::resource('roles', \App\Http\Controllers\Admin\RolesController::class);
+    Route::resource('permissions', \App\Http\Controllers\Admin\PermissionsController::class);
 
 });

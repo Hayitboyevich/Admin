@@ -7,11 +7,11 @@
                 <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
             </div>
             <div class="card-body">
-                <form action="{{ route('users.store') }}" method="post">
+                <form action="{{ route('users.store') }}" method="POST">
                     @csrf
                     <div class="form-group">
-                        <label for="title">Name</label>
-                        <input type="text" class="form-control" id="title" name="title">
+                        <label for="name">Name</label>
+                        <input type="text" class="form-control" id="name" name="name">
                     </div>
                     <div class="form-group">
                         <label for="email">Email</label>

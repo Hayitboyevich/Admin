@@ -7,20 +7,15 @@
                 <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
             </div>
             <div class="card-body">
-                <form action="{{ route('users.update', ['user' => $user]) }}" method="post">
-                    @method('patch')
+                <form action="{{ route('roles.store') }}" method="POST">
                     @csrf
                     <div class="form-group">
                         <label for="name">Name</label>
-                        <input type="text" class="form-control" id="name" name="name" value="{{ $user->name }}">
+                        <input type="text" class="form-control" id="name" name="name">
                     </div>
                     <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" class="form-control" id="email" name="email" value="{{ $user->email }}">
-                    </div>
-                    <div class="form-group">
-                        <label for="password">Password</label>
-                        <input type="password" class="form-control" id="password" name="password" minlength="8">
+                        <label for="slug">Slug</label>
+                        <input type="text" class="form-control" id="slug" name="slug">
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
@@ -29,3 +24,16 @@
 
     </div>
 @endsection
+@push('script')
+    <script>
+        $(document).ready(function(){
+            $('#name').keyup(function(e){
+                var str = $('#name').val();
+                str = str.replace(/\W+(?!$)/g, '-').toLowerCase();
+                $('#slug').val(str);
+                $('#slug').attr('placeholder', str);
+            });
+        });
+    </script>
+
+@endpush
