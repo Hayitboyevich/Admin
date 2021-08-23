@@ -25,7 +25,15 @@
                                 <td>{{ $role->id }}</td>
                                 <td>{{ $role->name }}</td>
                                 <td>{{ $role->slug }}</td>
-                                <td>----------</td>
+                                <td>
+                                    @if($role->permissions != null)
+                                        @foreach($role->permissions  as $permission)
+                                        <span class="badge badge-secondary">
+                                            {{ $permission->name }}
+                                        </span>
+                                        @endforeach
+                                    @endif
+                                </td>
                                 <td>
                                     <form action="{{ route('roles.destroy', ['role' => $role]) }}" method="post">
                                   <span>

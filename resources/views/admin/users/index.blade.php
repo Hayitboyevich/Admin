@@ -22,12 +22,26 @@
                         </thead>
                         <tbody>
                         @foreach($users as $user)
-                            <tr>
+                            <tr {{ Auth::user()->id == $user->id ? 'bgcolor=#ddd' : '' }}>
                                 <td>{{ $user->id }}</td>
                                 <td>{{ $user->name }}</td>
                                 <td>{{ $user->email }}</td>
-                                <td>----------</td>
-                                <td>----------</td>
+                                <td>
+                                    @if($user->roles != null)
+                                        @foreach($user->roles  as $role)
+                                            <span class=" badge badge-secondary">
+                                                {{ $role->name }}
+                                            </span>
+                                        @endforeach
+                                    @endif
+                                </td>
+                                <td> @if($user->permissions != null)
+                                        @foreach($user->permissions  as $permission)
+                                            <span class=" badge badge-secondary">
+                                                {{ $permission->name }}
+                                            </span>
+                                        @endforeach
+                                    @endif</td>
                                 <td>
                                     <form action="{{ route('users.destroy', ['user' => $user]) }}" method="post">
                                   <span>

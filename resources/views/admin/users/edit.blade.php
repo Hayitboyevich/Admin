@@ -8,7 +8,7 @@
             </div>
             <div class="card-body">
                 <form action="{{ route('users.update', ['user' => $user]) }}" method="post">
-                    @method('patch')
+                    @method('PUT')
                     @csrf
                     <div class="form-group">
                         <label for="name">Name</label>
@@ -21,6 +21,15 @@
                     <div class="form-group">
                         <label for="password">Password</label>
                         <input type="password" class="form-control" id="password" name="password" minlength="8">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Role</label>
+                        <select name="role" id="role" class="form-control">
+                            <option value="" disabled selected>Select role</option>
+                            @foreach($roles as $role)
+                                <option @isset($roleId) @if(in_array($role->id, $roleId)) selected @endif @endisset value="{{ $role->id }}">{{ $role->name }}</option>
+                            @endforeach
+                        </select>
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>

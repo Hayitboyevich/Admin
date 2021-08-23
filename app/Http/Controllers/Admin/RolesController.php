@@ -69,7 +69,11 @@ class RolesController extends Controller
     public function edit(Role $role)
     {
         $permissions = Permission::all();
-        return view('admin.roles.edit', compact('role', 'permissions'));
+        $rolePer = [];
+        foreach ($role->permissions as $permission) {
+            $rolePer[] = $permission->id;
+        }
+        return view('admin.roles.edit', compact('role', 'permissions', 'rolePer'));
     }
 
     /**
@@ -81,9 +85,12 @@ class RolesController extends Controller
      */
     public function update(Request $request, Role $role)
     {
+        $permissions = $request->input('permissions');
         $role->name = $request->input('name');
         $role->slug = $request->input('slug');
         $role->save();
+        $role->permissions()->detach();
+        $role->permissions()->attach($permissions);
         return redirect()->to('roles');
     }
 

@@ -20,9 +20,9 @@
                         <input type="text" class="form-control" id="slug" name="slug" value="{{ $role->slug }}">
                     </div>
 
-                    <select class="form-control select2-multiple" name="permissions[]" multiple >
+                    <select class="form-control select2-multiple" name="permissions[]" multiple>
                         @foreach ($permissions as $permission)
-                            <option value="{{ $permission->id }}">{{ $permission->name }}</option>
+                            <option @isset($rolePer) @if (in_array($permission->id,$rolePer)) selected  @endif @endisset value="{{ $permission->id }}">{{ $permission->name }}</option>
                         @endforeach
                     </select>
 

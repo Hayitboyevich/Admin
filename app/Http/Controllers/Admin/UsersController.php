@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -27,7 +28,8 @@ class UsersController extends Controller
      */
     public function create()
     {
-        return view('admin.users.create');
+        $roles = Role::all();
+        return view('admin.users.create', compact('roles'));
     }
 
     /**
@@ -38,12 +40,25 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
-//        dd($request);
+        $perId = [];
+
+        $roleId = $request->input('role');
+        $role = Role::whereId($roleId)->first();
+        $permissions = $role->permissions;
+
+        foreach ($permissions as $permission)
+        {
+            $perId[] = $permission->id;
+        }
+//        dd($perId);
         $user = new User();
         $user->name = $request->input('name');
         $user->email = $request->input('email');
         $user->password = Hash::make($request->input('password'));
         $user->save();
+        $user->roles()->attach($roleId);
+        $user->permissions()->attach($perId);
+
         return redirect()->route('users.index');
     }
 
@@ -66,7 +81,14 @@ class UsersController extends Controller
      */
     public function edit(User $user)
     {
-        return view('admin.users.edit', compact('user'));
+        $roleId = [];
+        $roles = Role::all();
+        foreach ($user->roles  as $role)
+        {
+            $roleId[] = $role->id;
+        }
+//        dd($role);
+        return view('admin.users.edit', compact('user', 'roles', 'roleId'));
     }
 
     /**
@@ -78,10 +100,24 @@ class UsersController extends Controller
      */
     public function update(Request $request, User $user)
     {
+        $perId = [];
+
+        $roleId = $request->input('role');
+        $role = Role::whereId($roleId)->first();
+        $permissions = $role->permissions;
+
+        foreach ($permissions as $permission)
+        {
+            $perId[] = $permission->id;
+        }
         $user->name = $request->input('name');
         $user->email = $request->input('email');
         $user->password = Hash::make($request->password);
         $user->save();
+        $user->roles()->detach();
+        $user->permissions()->detach();
+        $user->roles()->attach($roleId);
+        $user->permissions()->attach($perId);
         return redirect()->route('users.index');
     }
 
