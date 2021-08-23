@@ -20,6 +20,8 @@
     <!-- Custom styles for this template-->
     <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
     <link href="{{ asset('vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/select2.min.css') }}">
+
     @stack('style')
 
 </head>
@@ -391,6 +393,15 @@
 
 <!-- Page level custom scripts -->
 <script src="{{ asset('js/demo/datatables-demo.js') }}"></script>
+<script src="{{ asset('js/select2.min.js') }}"></script>
+<script>
+    jQuery(document).ready(function(){
+        $(".select2-multiple").select2({
+            placeholder:"Выбрать пункт"
+        });
+    })
+</script>
+
 @stack('script')
 
 </body>

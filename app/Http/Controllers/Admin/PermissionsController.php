@@ -63,7 +63,7 @@ class PermissionsController extends Controller
      */
     public function edit(Permission $permission)
     {
-        //
+        return view('admin.permissions.edit', compact('permission'));
     }
 
     /**
@@ -75,7 +75,11 @@ class PermissionsController extends Controller
      */
     public function update(Request $request, Permission $permission)
     {
-        //
+        $permission->name = $request->input('name');
+        $permission->slug = $request->input('slug');
+        $permission->save();
+        return redirect()->to('permissions');
+
     }
 
     /**
@@ -86,6 +90,11 @@ class PermissionsController extends Controller
      */
     public function destroy(Permission $permission)
     {
-        //
+        if($permission){
+            $permission->delete();
+            return redirect()->back();
+        }
+        return redirect()->back();
+
     }
 }
