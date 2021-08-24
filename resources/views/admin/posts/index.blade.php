@@ -31,7 +31,9 @@
                             <td>
                                 <form action="{{ route('post.delete', ['post' => $post]) }}" method="post">
                                   <span>
+                                  @can('edit', $post)
                                       <a href="{{ route('post.edit', ['post'=>$post]) }}" class="text-info"><i class="fas fa-edit" aria-hidden="true"></i></a>
+                                  @endcan
                                   </span>
                                     @csrf
                                     <button type="submit" title="delete" style="border: none; background-color:transparent;">

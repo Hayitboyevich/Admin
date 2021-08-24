@@ -36,8 +36,8 @@ Route::group([
     Route::post('/delete/{post}', [\App\Http\Controllers\Admin\PostController::class, 'delete'])->name('delete');
    });
 
-    Route::resource('users', \App\Http\Controllers\Admin\UsersController::class);
-    Route::resource('roles', \App\Http\Controllers\Admin\RolesController::class);
+    Route::resource('users', \App\Http\Controllers\Admin\UsersController::class)->middleware('role:admin,manager');
+    Route::resource('roles', \App\Http\Controllers\Admin\RolesController::class)->middleware('can:isAdmin');
     Route::resource('permissions', \App\Http\Controllers\Admin\PermissionsController::class);
 
 });
